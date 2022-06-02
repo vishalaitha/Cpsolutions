@@ -1,0 +1,113 @@
+    /*---------------------------------------------------------------------------------------------------------------------------*/
+    // Author : I_Am_A_Noob
+    /*---------------------------------------------------------------------------------------------------------------------------*/
+    #include<bits/stdc++.h>
+    /*---------------------------------------------------------------------------------------------------------------------------*/
+    //constants and typedefs
+    #define int long long int
+    #define MOD 10000000017
+    #define epsilon = 0.0000001f
+    #define PI 3.141592653589793238462
+    /*---------------------------------------------------------------------------------------------------------------------------*/
+    //operations on containers
+    #define pb push_back
+    #define ppb pop_back
+    #define ff first
+    #define ss second
+    #define all(x) (x).begin(), (x).end()
+    /*---------------------------------------------------------------------------------------------------------------------------*/
+    //general operations
+    #define endl "\n"
+    #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+    /*---------------------------------------------------------------------------------------------------------------------------*/
+    //templates
+    //template <class T> void _print(vector <T> v);
+    //template <class T> void _print(set <T> v);
+    /*---------------------------------------------------------------------------------------------------------------------------*/
+    #define vi vector<int>
+    #define vpii vector<pair<int, int>>
+    #define vs vector<string>
+    #define vb vector<bool>
+    #define vvi vector<vector<int>>
+    #define pii pair<int, int>
+    #define si set<int>
+    #define mpii map<int, int>
+    /*---------------------------------------------------------------------------------------------------------------------------*/
+    void swap(int &x, int &y) {int temp = x; x = y; y = temp;}
+    void swap(char &x,char&y) {char temp= x; x=y; y=temp;}
+    // ll gcd(ll a, ll b) {if (b > a) {return gcd(b, a);} if (b == 0) {return a;} return gcd(b, a % b);}
+    /*---------------------------------------------------------------------------------------------------------------------------*/
+    int ans,temp,sum;
+    using namespace std;
+    void _print(long long t) {cout << t;}
+    template <class T> void _print(vector <T> v) {cout << "[ "; for (T i : v) {_print(i); cout << " ";} cout << "]";}
+    int funcans(string &s,int a,int b,int c){
+    	int n=s.length();
+    	vpii mid;
+        int prevocc=-1;
+        int nextoccur=INT_MAX;
+        for(int i=0;i<n;i++){
+            if(s[i]==a)   
+                prevocc=i;
+            if(s[i]==b){
+                mid.pb({prevocc,INT_MAX});
+            }
+        }
+        for(int i=n,j=mid.size()-1;i>=0;i--){
+            if(s[i]==c)   
+                nextoccur=i;
+            if(s[i]==b){
+                mid[j].second=nextoccur;
+                j--;
+            }
+        }
+        int ans=INT_MAX;
+        for(int i=0;i<mid.size();i++){
+            if(mid[i].first!=-1&&mid[i].second!=INT_MAX){
+                ans=min(ans,(mid[i].second-(mid[i].first-1)));
+            }
+        }
+        return ans;
+    }
+    void solve(){
+        string s;
+        cin>>s;
+        int n=s.length();
+        si ss;
+        for(int i=0;i<n;i++){
+        	ss.insert(s[i]);
+        }
+        if(ss.size()<3){
+        	cout<<0<<endl;
+        	return;
+        }
+        vi st;
+        st.pb(funcans(s,'1','2','3'));
+        st.pb(funcans(s,'1','3','2'));
+        st.pb(funcans(s,'2','1','3'));
+        st.pb(funcans(s,'2','3','1'));
+        st.pb(funcans(s,'3','1','2'));
+        st.pb(funcans(s,'3','2','1'));
+        sort(st.begin(),st.end());
+        for(auto it:st)
+        	if(it>0){
+        		cout<<it<<endl;
+        		return;
+        	}
+        cout<<0<<endl;
+    }
+
+    int32_t main()
+    {
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt","r",stdin); //file input.txt is opened in reading mode i.e "r"
+    freopen("output.txt","w",stdout);  //file output.txt is opened in writing mode i.e "w"
+    #endif
+        fastio();
+        int t=1;
+        cin>>t;
+        while(t--){
+        solve();
+        }
+    return 0;
+    }
