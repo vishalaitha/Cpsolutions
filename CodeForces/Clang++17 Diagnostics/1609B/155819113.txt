@@ -1,0 +1,116 @@
+/*---------------------------------------------------------------------------------------------------------------------------*/
+// Author : I_Am_A_Noob
+/*---------------------------------------------------------------------------------------------------------------------------*/
+#include<bits/stdc++.h>
+/*---------------------------------------------------------------------------------------------------------------------------*/
+//constants and typedefs
+#define int long long int
+#define MOD 10000000017
+#define epsilon = 0.0000001f
+#define PI 3.141592653589793238462
+/*---------------------------------------------------------------------------------------------------------------------------*/
+//operations on containers
+#define pb push_back
+#define ppb pop_back
+#define ff first
+#define ss second
+#define all(x) (x).begin(), (x).end()
+/*---------------------------------------------------------------------------------------------------------------------------*/
+//general operations
+#define endl "\n"
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+/*---------------------------------------------------------------------------------------------------------------------------*/
+//templates
+//template <class T> void _print(vector <T> v);
+//template <class T> void _print(set <T> v);
+/*---------------------------------------------------------------------------------------------------------------------------*/
+#define vi vector<int>
+#define vpii vector<pair<int, int>>
+#define vs vector<string>
+#define vb vector<bool>
+#define vvi vector<vector<int>>
+#define pii pair<int, int>
+#define si set<int>
+#define mpii map<int, int>
+/*---------------------------------------------------------------------------------------------------------------------------*/
+// ll gcd(ll a, ll b) {if (b > a) {return gcd(b, a);} if (b == 0) {return a;} return gcd(b, a % b);}
+/*---------------------------------------------------------------------------------------------------------------------------*/
+int ans,temp,sum;
+using namespace std;
+void _print(long long t) {cout << t;}
+template <class T> void _print(vector <T> v) {cout << "[ "; for (T i : v) {_print(i); cout << " ";} cout << "]";}
+int count(string &s){
+	int n=s.length();
+	int ans=0;
+	for(int i=0;i<n-2;i++){
+		if(s[i]=='a'&&s[i+1]=='b'&&s[i+2]=='c'){
+			ans++;
+		}
+	}
+	return ans;
+}
+void solve(){
+    int n,q;
+    cin>>n>>q;
+    string s;
+    cin>>s;
+    int countofabc=count(s);
+    while(q--){
+    	int pos;char replace;
+    	cin>>pos>>replace;
+    	pos--;
+    	if(s[pos]==replace){
+    		cout<<countofabc<<endl;
+    		continue;
+    	}
+    	// here we're checking whether it's disturbing any occurance of abc
+    	if(pos>=0&&pos<n-2&&s[pos]=='a'){
+    		if(s[pos+1]=='b'&&s[pos+2]=='c'){
+    			countofabc--;
+    		}
+    	}
+    	if(pos>0&&pos<n-1&&s[pos]=='b'){
+    		if(s[pos-1]=='a'&&s[pos+1]=='c'){
+    			countofabc--;
+    		}	
+    	}
+    	if(pos>1&&s[pos]=='c'){
+    		if(s[pos-2]=='a'&&s[pos-1]=='b'){
+    			countofabc--;
+    		}	
+    	}
+    	// here we're checking whether it's increasing anything we know
+    	s[pos]=replace;
+    	if(pos>=0&&pos<n-2&&replace=='a'){
+    		if(s[pos+1]=='b'&&s[pos+2]=='c'){
+    			countofabc++;
+    		}
+    	}
+    	else if(pos>0&&pos<n-1&&replace=='b'){
+    		if(s[pos-1]=='a'&&s[pos+1]=='c'){
+    			countofabc++;
+    		}
+    	}
+    	else if(pos>1&&replace=='c'){
+    		if(s[pos-1]=='b'&&s[pos-2]=='a'){
+    			countofabc++;
+    		}
+    	}
+    	cout<<countofabc<<endl;
+    }
+}
+
+int32_t main()
+{
+#ifndef ONLINE_JUDGE
+freopen("input.txt","r",stdin); //file input.txt is opened in reading mode i.e "r"
+freopen("output.txt","w",stdout);  //file output.txt is opened in writing mode i.e "w"
+#endif
+    fastio();
+    int t=1;
+    // cin>>t;
+    while(t--){
+    solve();
+    }
+return 0;
+}
